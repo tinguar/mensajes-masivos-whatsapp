@@ -1,0 +1,29 @@
+name: Deploy Python Flask API
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Run API
+        run: |
+          cd backend
+          export FLASK_APP=app.py
+          export YOUR_PUBLIC_API_URL=gabrielcodigo.com
+          flask run --host=0.0.0.0 --port=5000
