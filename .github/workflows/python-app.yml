@@ -21,11 +21,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r backend/requirements.txt
 
-      - name: Start ngrok
-        run: |
-          ./ngrok authtoken 2LoR88zvtfTuO3Mvk9eN9PEZf8Q_48WQ6cjb4ojkkxdwQGnnQ
-          ./ngrok http 5000 > /dev/null &
-
       - name: Run API
         run: |
           cd backend
