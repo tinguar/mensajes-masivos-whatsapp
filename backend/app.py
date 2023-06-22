@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)  # Habilitar CORS en la aplicación Flask
 
 
-@app.route('http://localhost:5000/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
         return jsonify({'error': 'No file uploaded'})
