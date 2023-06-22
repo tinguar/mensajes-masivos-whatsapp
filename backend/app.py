@@ -1,10 +1,13 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import pandas as pd
 
 app = Flask(__name__)
-CORS(app)  # Habilitar CORS en la aplicación Flask
+CORS(app)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -18,18 +21,19 @@ def upload_file():
     if file:
         filename = file.filename
         if filename.endswith('.csv'):
-            df = pd.read_csv(file)
+            try:
+                df = pd.read_csv(file)
+                data = df.to_dict()
+                return jsonify({'message': 'File uploaded successfully', 'data': data})
+            except Exception as e:
+                return jsonify({'error': 'Error processing CSV file', 'details': str(e)})
         elif filename.endswith('.xml'):
-            df = pd.read_xml(file)
+            # Aquí puedes agregar el código para procesar el archivo XML si es necesario
+            return jsonify({'error': 'XML file format not supported'})
         else:
             return jsonify({'error': 'Invalid file format'})
 
-        # Aquí puedes realizar cualquier procesamiento o manipulación de los datos
-
-        return jsonify({'message': 'File uploaded successfully'})
-    else:
-        return jsonify({'error': 'No file uploaded'})
-
+    return jsonify({'error': 'No file uploaded'})
 
 if __name__ == '__main__':
     app.run()

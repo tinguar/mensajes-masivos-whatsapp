@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #eaf2ff;
+    border: 1px solid #ccc;
+}
+
+.error {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffeaea;
+    border: 1px solid #cc0000;
+}
