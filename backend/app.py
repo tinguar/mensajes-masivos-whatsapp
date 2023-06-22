@@ -5,9 +5,16 @@ import pandas as pd
 app = Flask(__name__)
 CORS(app)  # Habilitar CORS en la aplicación Flask
 
-@app.route('/upload', methods=['POST'])
+
+@app.route('http://localhost:5000/upload', methods=['POST'])
 def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file uploaded'})
+
     file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'})
+
     if file:
         filename = file.filename
         if filename.endswith('.csv'):
@@ -16,12 +23,13 @@ def upload_file():
             df = pd.read_xml(file)
         else:
             return jsonify({'error': 'Invalid file format'})
-        
+
         # Aquí puedes realizar cualquier procesamiento o manipulación de los datos
-        
+
         return jsonify({'message': 'File uploaded successfully'})
     else:
         return jsonify({'error': 'No file uploaded'})
+
 
 if __name__ == '__main__':
     app.run()
