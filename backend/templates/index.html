@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Upload File</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+<body>
+
+
+    <h1>Subir archivo</h1>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" id="file-input" name="file">
+        <input type="submit" value="Subir archivo">
+    </form>
+    <div id="table-container"></div>
+
+    <h2>Seleccionar columna</h2>
+    <select id="columna-seleccionada">
+        <option value="">Seleccione una columna</option>
+    </select>
+    <textarea id="cuadro-texto-personalizado" rows="4" cols="50"></textarea>
+
+<button id="enviar-mensaje-btn">Enviar Mensaje Personalizado</button>
+
+
+</body>
+<script src="../static/script.js"></script>
+<!-- use version 0.19.3 -->
+<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+</html>
