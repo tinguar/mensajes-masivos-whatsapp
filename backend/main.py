@@ -10,6 +10,7 @@ import chardet
 app = Flask(__name__)
 CORS(app)
 
+current_file = None  # Variable global para almacenar el archivo actual
 
 def read_csv_data(file):
     # Detectar la codificación del archivo CSV
@@ -65,6 +66,8 @@ def sendmsj(number, message, columns):
 
 @app.route('/mostrar_datos', methods=['POST'])
 def mostrar_datos():
+    global current_file  # Acceder a la variable global
+
     if 'file' not in request.files:
         return jsonify({'error': 'No se ha subido ningún archivo'})
 
@@ -101,6 +104,11 @@ def mostrar_datos():
 @app.route('/enviar_mensaje', methods=['POST', 'OPTIONS'])
 @cross_origin(origin='http://localhost:63342', headers=['Content-Type'], methods=['POST'])
 def enviar_mensajes():
+    global current_file  # Acceder a la variable global
+
+    if current_file is None:
+        return jsonify({'error': 'No hay un archivo en caché'})
+
     if 'file' not in request.files:
         return jsonify({'error': 'No se ha subido ningún archivo'})
 

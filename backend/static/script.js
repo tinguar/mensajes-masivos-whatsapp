@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cuadroTextoPersonalizado = document.getElementById('cuadro-texto-personalizado');
   const enviarMensajeBtn = document.getElementById('enviar-mensaje-btn');
 
+  let currentFile = '';
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.error) {
           showError(data.error);
         } else if (data.columns) {
+          currentFile = file.name; // Almacena el nombre del archivo en la variable currentFile
           populateColumnSelect(data.columns);
         } else {
           showError('Ha ocurrido un error');
@@ -143,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       headers: {
         'Content-Type': 'application/json'
       },
-          mode: 'cors' // Agrega esta línea para especificar que se permita CORS
+      mode: 'cors' // Agrega esta línea para especificar que se permita CORS
 
     })
       .then(response => response.json())
@@ -156,6 +159,4 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error(error);
       });
   }
-
-
 });
