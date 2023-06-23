@@ -1,30 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enviar Mensajes WhatsApp</title>
-  <link rel="stylesheet" type="text/css" href="../static/styles.css">
+  <title>Enviar Mensajes de WhatsApp</title>
+    <link rel="stylesheet" href="../static/styles.css">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
-  <h1>Enviar Mensajes WhatsApp</h1>
-  <form id="upload-form">
-    <input type="file" id="file-input" accept=".csv, .xml, .xlsx" required>
-    <button type="submit">Cargar Archivo</button>
+  <h1>Enviar Mensajes de WhatsApp</h1>
+  <form id="upload-form" enctype="multipart/form-data">
+    <input type="file" name="file" id="file-input" accept=".csv, .xlsx, .xls" required>
+    <button type="submit">Enviar Archivo</button>
   </form>
-  <div id="table-container"></div>
-  <div>
-    <label for="columna-seleccionada">Seleccionar columna:</label>
-    <select id="columna-seleccionada"></select>
+
+  <div id="message-container" style="display: none;">
+    <h2>Mensaje de WhatsApp</h2>
+    <input type="text" name="mensaje" id="mensaje-input" placeholder="Mensaje">
+    <button id="enviar-button">Enviar Mensaje</button>
+    <div id="response"></div>
   </div>
-  <div>
-    <label for="cuadro-texto-personalizado">Mensaje personalizado:</label>
-    <textarea id="cuadro-texto-personalizado"></textarea>
-  </div>
-  <button id="enviar-mensaje-btn">Enviar Mensajes</button>
 
   <script src="../static/script.js"></script>
-  <!-- Utiliza la versión 0.19.3 -->
-  <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+
 </body>
 </html>
