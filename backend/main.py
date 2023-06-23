@@ -1,6 +1,6 @@
 from datetime import time
 import pywhatkit as pw
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import xml.etree.ElementTree as ET
 import pandas as pd
@@ -108,7 +108,7 @@ def mostrar_datos():
     return jsonify({'error': 'No se ha subido ningún archivo'})
 
 
-@app.route('/enviar_mensaje', methods=['POST', 'OPTIONS'])
+@app.route('/enviar_mensaje', methods=['POST'])
 @cross_origin(origin='http://localhost:63342', headers=['Content-Type'], methods=['POST'])
 def enviar_mensajes():
     global current_file  # Acceder a la variable global
@@ -122,11 +122,11 @@ def enviar_mensajes():
     data = request.json['data']
 
     if data:
-        number_column = data.get('number_column')
+        number_column = 'NUMERO'  # Nombre fijo de la columna para el número de teléfono
         message_column = data.get('message_column')
 
-        if not number_column or not message_column:
-            return jsonify({'error': 'Las columnas de número y mensaje son requeridas'})
+        if not message_column:
+            return jsonify({'error': 'La columna de mensaje es requerida'})
 
         try:
             if current_file.name.endswith('.csv'):
@@ -161,13 +161,16 @@ def send_messages_from_data(data, columns, number_column, message_column):
         sendmsj(number, message, columns)
 
 
-@app.after_request
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:63342'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    response.headers['Access-Control-Allow-Methods'] = 'POST'
-    return response
-
-
 if __name__ == '__main__':
     app.run()
+
+
+
+
+
+# @app.after_request
+# def add_cors_headers(response):
+#     response.headers['Access-Control-Allow-Origin'] = 'http://localhost:63342'
+#     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+#     response.headers['Access-Control-Allow-Methods'] = 'POST'
+#     return response
