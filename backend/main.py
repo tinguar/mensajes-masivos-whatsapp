@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
 import xml.etree.ElementTree as ET
 import pandas as pd
+import tempfile
 import csv
 import chardet
 
@@ -80,18 +81,24 @@ def mostrar_datos():
         if filename.endswith('.csv'):
             try:
                 data, columns = read_csv_data(file)
+                current_file = tempfile.NamedTemporaryFile(delete=False)
+                file.save(current_file.name)
                 return jsonify({'message': 'Archivo subido exitosamente', 'columns': columns})
             except Exception as e:
                 return jsonify({'error': 'Error al procesar el archivo CSV', 'details': str(e)})
         elif filename.endswith('.xml'):
             try:
                 data, columns = read_xml_data(file)
+                current_file = tempfile.NamedTemporaryFile(delete=False)
+                file.save(current_file.name)
                 return jsonify({'message': 'Archivo subido exitosamente', 'columns': columns})
             except Exception as e:
                 return jsonify({'error': 'Error al procesar el archivo XML', 'details': str(e)})
         elif filename.endswith('.xlsx'):
             try:
                 data, columns = read_excel_data(file)
+                current_file = tempfile.NamedTemporaryFile(delete=False)
+                file.save(current_file.name)
                 return jsonify({'message': 'Archivo subido exitosamente', 'columns': columns})
             except Exception as e:
                 return jsonify({'error': 'Error al procesar el archivo de Excel', 'details': str(e)})
@@ -109,50 +116,39 @@ def enviar_mensajes():
     if current_file is None:
         return jsonify({'error': 'No hay un archivo en caché'})
 
-    if 'file' not in request.files:
-        return jsonify({'error': 'No se ha subido ningún archivo'})
-
     if 'data' not in request.json:
         return jsonify({'error': 'No se han proporcionado datos para enviar mensajes'})
 
-    file = request.files['file']
     data = request.json['data']
 
-    if file.filename == '':
-        return jsonify({'error': 'No se ha seleccionado ningún archivo'})
-
-    if file and data:
+    if data:
         number_column = data.get('number_column')
         message_column = data.get('message_column')
 
         if not number_column or not message_column:
             return jsonify({'error': 'Las columnas de número y mensaje son requeridas'})
 
-        if file.filename.endswith('.csv'):
-            try:
-                csv_data, csv_columns = read_csv_data(file)
+        try:
+            if current_file.name.endswith('.csv'):
+                csv_data, csv_columns = read_csv_data(current_file.name)
                 send_messages_from_data(csv_data, csv_columns, number_column, message_column)
-                return jsonify({'message': 'Mensajes enviados exitosamente'})
-            except Exception as e:
-                return jsonify({'error': 'Error al procesar el archivo CSV', 'details': str(e)})
-        elif file.filename.endswith('.xml'):
-            try:
-                xml_data, xml_columns = read_xml_data(file)
+            elif current_file.name.endswith('.xml'):
+                xml_data, xml_columns = read_xml_data(current_file.name)
                 send_messages_from_data(xml_data, xml_columns, number_column, message_column)
-                return jsonify({'message': 'Mensajes enviados exitosamente'})
-            except Exception as e:
-                return jsonify({'error': 'Error al procesar el archivo XML', 'details': str(e)})
-        elif file.filename.endswith('.xlsx'):
-            try:
-                excel_data, excel_columns = read_excel_data(file)
+            elif current_file.name.endswith('.xlsx'):
+                excel_data, excel_columns = read_excel_data(current_file.name)
                 send_messages_from_data(excel_data, excel_columns, number_column, message_column)
-                return jsonify({'message': 'Mensajes enviados exitosamente'})
-            except Exception as e:
-                return jsonify({'error': 'Error al procesar el archivo de Excel', 'details': str(e)})
-        else:
-            return jsonify({'error': 'Formato de archivo inválido'})
+            else:
+                return jsonify({'error': 'Formato de archivo inválido'})
 
-    return jsonify({'error': 'No se ha subido ningún archivo'})
+            current_file.close()
+            current_file = None
+
+            return jsonify({'message': 'Mensajes enviados exitosamente'})
+        except Exception as e:
+            return jsonify({'error': 'Error al procesar el archivo', 'details': str(e)})
+
+    return jsonify({'error': 'No se han proporcionado datos para enviar mensajes'})
 
 
 def send_messages_from_data(data, columns, number_column, message_column):
