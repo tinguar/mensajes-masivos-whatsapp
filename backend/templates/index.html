@@ -2,34 +2,27 @@
 <html>
 <head>
   <title>DDD</title>
-    <link rel="stylesheet" href="../static/styles.css">
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+  <link rel="stylesheet" href="../static/styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+  <h1>Cargar archivo</h1>
+  <form id="upload-form">
+    <input type="file" id="file-input" accept=".csv, .xlsx, .xls">
+    <input type="submit" value="Cargar">
+  </form>
 
+  <div id="message-container" style="display: none;">
+    <p>Archivo cargado correctamente.</p>
 
-    <h1>Cargar archivo</h1>
-    <form id="upload-form">
-        <input type="file" id="file-input" accept=".csv, .xlsx, .xls">
-        <input type="submit" value="Cargar">
-    </form>
-
-
-
-    <div id="message-container" style="display: none;">
-        <p>Archivo cargado correctamente.</p>
-
-            <h1>Nombres de las columnas</h1>
+    <h1>Nombres de las columnas</h1>
     <div id="columnas"></div>
 
-    <h1>Enviar mensajes</h1>
+    <textarea id="mensaje-input" placeholder="Ingrese su mensaje personalizado"></textarea>
+
     <button id="send-messages">Enviar mensajes</button>
-
-    </div>
-
+  </div>
 
   <script src="../static/script.js"></script>
-
 </body>
 </html>

@@ -25,10 +25,12 @@ $(document).ready(function() {
 
   $("#send-messages").click(function(e) {
     e.preventDefault();
+    var mensajePersonalizado = $("#mensaje-input").val(); // Obtener el mensaje personalizado del campo de texto
 
     $.ajax({
       url: "http://localhost:5000/enviar-mensajes",
       type: "POST",
+      data: { mensaje: mensajePersonalizado }, // Enviar el mensaje personalizado en la solicitud
       success: function(response) {
         console.log(response);
         alert("Mensajes enviados correctamente");
@@ -50,7 +52,7 @@ $(document).ready(function() {
         var columnasHTML = "";
 
         for (var i = 0; i < columnas.length; i++) {
-          columnasHTML += "<p>" + columnas[i] + "</p>";
+          columnasHTML += "<p onclick='seleccionarColumna(this)'>" + columnas[i] + "</p>"; // Agregar onclick para seleccionar la columna
         }
 
         $("#columnas").html(columnasHTML);
@@ -61,3 +63,10 @@ $(document).ready(function() {
     });
   }
 });
+
+function seleccionarColumna(elemento) {
+  var columnaSeleccionada = $(elemento).text();
+  var mensajeActual = $("#mensaje-input").val();
+  var nuevoMensaje = mensajeActual + " [" + columnaSeleccionada + "]";
+  $("#mensaje-input").val(nuevoMensaje);
+}

@@ -1,0 +1,25 @@
+Date: 24/6/2023
+Time: 2:51
+Phone Number: +593992889078
+Message: hol como estas [67, 45]
+--------------------
+Date: 24/6/2023
+Time: 3:0
+Phone Number: +593992889078
+Message: Gaabriel 67 593992889078
+--------------------
+Date: 24/6/2023
+Time: 3:1
+Phone Number: +593992889078
+Message: Ggg 45 593992889078
+--------------------
+Date: 24/6/2023
+Time: 3:8
+Phone Number: +593992889078
+Message: Gaabriel 67 593992889078
+--------------------
+Date: 24/6/2023
+Time: 3:8
+Phone Number: +593992889078
+Message: Ggg 45 593992889078
+--------------------

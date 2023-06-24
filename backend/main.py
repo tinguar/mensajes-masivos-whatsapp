@@ -1,12 +1,11 @@
 import pandas as pd
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 import pywhatkit as pw
 import pyautogui as pa
 import time
 from tkinter import *
 import tempfile
-import io
 import os
 
 app = Flask(__name__)
@@ -15,6 +14,7 @@ CORS(app)
 # Directorio temporal para guardar los archivos
 TEMP_DIR = tempfile.gettempdir()
 cached_data = None  # Variable global para almacenar los datos en caché
+columnas_principales = []  # Variable global para almacenar los nombres de las columnas principales
 
 # Ruta para cargar el archivo
 @app.route('/cargar-archivo', methods=['POST'])
@@ -25,7 +25,9 @@ def cargar_archivo():
         return jsonify({'error': 'Formato de archivo no válido'})
 
     global cached_data
+    global columnas_principales
     cached_data = data
+    columnas_principales = data.columns.tolist()
 
     return jsonify({'success': True, 'message': 'Archivo cargado correctamente'})
 
@@ -36,10 +38,21 @@ def enviar_mensajes():
         return jsonify({'error': 'No se ha cargado ningún archivo'})
 
     numeros = cached_data['NUMERO']
+    mensaje_personalizado = request.form['mensaje']
 
-    # Enviar mensajes de WhatsApp
-    for numero in numeros:
-        sendmsj(str(numero))
+    # Iterar sobre los datos de cada columna
+    for index, row in cached_data.iterrows():
+        mensaje = mensaje_personalizado  # Reiniciar el mensaje personalizado para cada fila
+
+        # Reemplazar los marcadores de columna en el mensaje personalizado
+        for col in columnas_principales:
+            marcador = f"[{col}]"
+            if marcador in mensaje:
+                valor_celda = row[col]
+                mensaje = mensaje.replace(marcador, str(valor_celda))
+
+        numero = str(row['NUMERO'])  # Obtener el número de teléfono de la columna 'NUMERO'
+        sendmsj(numero, mensaje)  # Enviar mensaje de WhatsApp
 
     return jsonify({'success': True, 'message': 'Mensajes enviados correctamente'})
 
@@ -49,8 +62,7 @@ def nombres_columnas():
     if cached_data is None:
         return jsonify({'error': 'No se ha cargado ningún archivo'})
 
-    columnas = cached_data.columns.tolist()
-    return jsonify({'columnas_principales': columnas})
+    return jsonify({'columnas_principales': columnas_principales})
 
 
 # Función para leer los datos del archivo y guardarlos en caché
@@ -66,17 +78,16 @@ def get_data(file):
         data = pd.read_csv(temp_file_path, encoding='utf-8')
     elif file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
         # Si es un archivo Excel
-        data = pd.read_excel(temp_file_path, encoding='utf-8')
+        data = pd.read_excel(temp_file_path)
 
     return data
 
 
 # Función para enviar mensajes de WhatsApp
-def sendmsj(Number):
+def sendmsj(Number, mensaje):
     win = Tk()
     screen_width = win.winfo_screenwidth()
     screen_height= win.winfo_screenheight()
-    mensaje = "¡Este es un mensaje de prueba!"
     numero = "+" + Number  # Agregar el código de país al número
     pw.sendwhatmsg_instantly(numero, mensaje)
     pa.moveTo(screen_width * 0.694, screen_height * 0.90)
@@ -88,3 +99,4 @@ def sendmsj(Number):
 
 if __name__ == '__main__':
     app.run()
+
