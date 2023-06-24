@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Enviar Mensajes de WhatsApp</title>
+  <title>DDD</title>
     <link rel="stylesheet" href="../static/styles.css">
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <body>
-  <h1>Enviar Mensajes de WhatsApp</h1>
-  <form id="upload-form" enctype="multipart/form-data">
-    <input type="file" name="file" id="file-input" accept=".csv, .xlsx, .xls" required>
-    <button type="submit">Enviar Archivo</button>
-  </form>
 
-  <div id="message-container" style="display: none;">
-    <h2>Mensaje de WhatsApp</h2>
-    <input type="text" name="mensaje" id="mensaje-input" placeholder="Mensaje">
-    <button id="enviar-button">Enviar Mensaje</button>
-    <div id="response"></div>
-  </div>
+
+    <h1>Cargar archivo</h1>
+    <form id="upload-form">
+        <input type="file" id="file-input" accept=".csv, .xlsx, .xls">
+        <input type="submit" value="Cargar">
+    </form>
+
+
+
+    <div id="message-container" style="display: none;">
+        <p>Archivo cargado correctamente.</p>
+
+            <h1>Nombres de las columnas</h1>
+    <div id="columnas"></div>
+
+    <h1>Enviar mensajes</h1>
+    <button id="send-messages">Enviar mensajes</button>
+
+    </div>
+
 
   <script src="../static/script.js"></script>
 

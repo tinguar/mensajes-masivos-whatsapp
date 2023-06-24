@@ -7,13 +7,14 @@ $(document).ready(function() {
     formData.append("file", file);
 
     $.ajax({
-      url: "http://localhost:5000/",
+      url: "http://localhost:5000/cargar-archivo",
       type: "POST",
       data: formData,
       contentType: false,
       processData: false,
       success: function(response) {
         console.log(response);
+        obtenerNombresColumnas(); // Llama a la función para obtener los nombres de las columnas
         $("#message-container").show();
       },
       error: function(error) {
@@ -22,22 +23,41 @@ $(document).ready(function() {
     });
   });
 
-  $("#enviar-button").click(function() {
-    var mensaje = $("#mensaje-input").val();
+  $("#send-messages").click(function(e) {
+    e.preventDefault();
 
     $.ajax({
-      url: "http://localhost:5000/enviar_mensaje",
+      url: "http://localhost:5000/enviar-mensajes",
       type: "POST",
-      data: JSON.stringify({ "mensaje": mensaje }),
-      contentType: "application/json",
       success: function(response) {
         console.log(response);
-        $("#response").text("Mensaje enviado correctamente");
+        alert("Mensajes enviados correctamente");
       },
       error: function(error) {
         console.log(error);
-        $("#response").text("Error al enviar el mensaje");
+        alert("Error al enviar los mensajes");
       }
     });
   });
+
+  function obtenerNombresColumnas() {
+    $.ajax({
+      url: "http://localhost:5000/nombres-columnas",
+      type: "GET",
+      dataType: "json",
+      success: function(response) {
+        var columnas = response.columnas_principales;
+        var columnasHTML = "";
+
+        for (var i = 0; i < columnas.length; i++) {
+          columnasHTML += "<p>" + columnas[i] + "</p>";
+        }
+
+        $("#columnas").html(columnasHTML);
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
 });

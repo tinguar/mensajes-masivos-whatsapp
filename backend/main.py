@@ -7,43 +7,68 @@ import time
 from tkinter import *
 import tempfile
 import io
+import os
 
 app = Flask(__name__)
 CORS(app)
 
+# Directorio temporal para guardar los archivos
+TEMP_DIR = tempfile.gettempdir()
+cached_data = None  # Variable global para almacenar los datos en caché
 
-# Función para leer los datos del archivo y guardarlos en caché
-def get_data(file):
-    # Cargar archivo en memoria
-    data = None
-    if file.filename.endswith('.csv'):
-        # Si es un archivo CSV
-        data = pd.read_csv(file, encoding='utf-8')
-    elif file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
-        # Si es un archivo Excel
-        data = pd.read_excel(file, encoding='utf-8')
-    return data
-
-
-# Ruta para obtener los datos del archivo
-@app.route('/', methods=['POST'])
-def index():
+# Ruta para cargar el archivo
+@app.route('/cargar-archivo', methods=['POST'])
+def cargar_archivo():
     file = request.files['file']
     data = get_data(file)
-    print(data)
     if data is None:
         return jsonify({'error': 'Formato de archivo no válido'})
 
-    # Leer la columna 'NUMERO'
-    numeros = data['NUMERO']
-    print(numeros)
+    global cached_data
+    cached_data = data
+
+    return jsonify({'success': True, 'message': 'Archivo cargado correctamente'})
+
+# Ruta para enviar los mensajes
+@app.route('/enviar-mensajes', methods=['POST'])
+def enviar_mensajes():
+    if cached_data is None:
+        return jsonify({'error': 'No se ha cargado ningún archivo'})
+
+    numeros = cached_data['NUMERO']
 
     # Enviar mensajes de WhatsApp
     for numero in numeros:
         sendmsj(str(numero))
-        print(sendmsj(str(numero)))
 
     return jsonify({'success': True, 'message': 'Mensajes enviados correctamente'})
+
+# Ruta para obtener los nombres de las columnas principales
+@app.route('/nombres-columnas', methods=['GET'])
+def nombres_columnas():
+    if cached_data is None:
+        return jsonify({'error': 'No se ha cargado ningún archivo'})
+
+    columnas = cached_data.columns.tolist()
+    return jsonify({'columnas_principales': columnas})
+
+
+# Función para leer los datos del archivo y guardarlos en caché
+def get_data(file):
+    # Guardar archivo en el directorio temporal
+    temp_file_path = os.path.join(TEMP_DIR, file.filename)
+    file.save(temp_file_path)
+
+    # Cargar archivo en memoria
+    data = None
+    if file.filename.endswith('.csv'):
+        # Si es un archivo CSV
+        data = pd.read_csv(temp_file_path, encoding='utf-8')
+    elif file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
+        # Si es un archivo Excel
+        data = pd.read_excel(temp_file_path, encoding='utf-8')
+
+    return data
 
 
 # Función para enviar mensajes de WhatsApp
