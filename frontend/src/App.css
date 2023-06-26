@@ -1,0 +1,14 @@
+.application {
+  display: grid;
+  min-height: 100%;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header header"
+    "content content content"
+    "footer footer footer";
+}
+
+.mainContent {
+  grid-area: content;
+  background-color: var(---color-theme-type-3);
+}
