@@ -1,0 +1,12 @@
+.advertising {
+  width: 150px;
+  height: 500px;
+}
+
+.advertising-left {
+  grid-area: addLeft;
+}
+
+.advertising-right {
+  grid-area: addRight;
+}

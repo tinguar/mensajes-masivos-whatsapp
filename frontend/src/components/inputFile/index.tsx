@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import "./index.css";
 import useFileUploader from "../../../hooks/useFileUploader";
+import useGetParams from "../../../hooks/useGetParams";
+import { useDispatch } from "react-redux";
+import { setParams } from "../../../redux/mainSlice";
 
 export default function InputFile() {
+  const dispatch = useDispatch();
   const { uploadFile, isUploading } = useFileUploader();
+  const { getParams, params } = useGetParams();
   const [file, setFile] = useState(null as File | null);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,22 +18,34 @@ export default function InputFile() {
   };
 
   useEffect(() => {
+    const uploadAndFetchData = async (file: File) => {
+      await uploadFile(file);
+      await getParams();
+    };
+
     if (file) {
-      uploadFile(file);
+      uploadAndFetchData(file);
     }
   }, [file]);
+
+  useEffect(() => {
+    if (params.length > 0) {
+      console.log(params);
+      dispatch(setParams(params));
+    }
+  }, [params]);
 
   return (
     <div className="contentInputFile">
       <div className="formFile">
         <label className="formFile__label-input" htmlFor="">
-          Upload a file
+          Cargar archivo
         </label>
         <label
           className="formFile__inputFileSelector"
           htmlFor="inputFileSelector"
         >
-          Select some file
+          Escoge un archivo
         </label>
         <input
           type="file"
@@ -43,7 +60,7 @@ export default function InputFile() {
             {file.name}
           </label>
         )}
-        {isUploading && <span>Uploading file...</span>}
+        {isUploading && <span>Cargando archivo...</span>}
       </div>
     </div>
   );

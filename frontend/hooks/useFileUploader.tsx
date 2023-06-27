@@ -23,8 +23,8 @@ const useFileUploader = () => {
       }
 
       // File uploaded successfully
-      console.log("File uploaded successfully.");
-      console.log(response.data);
+      // console.log("File uploaded successfully.");
+      // console.log(response.data);
     } catch (error: any) {
       setError(error);
     } finally {

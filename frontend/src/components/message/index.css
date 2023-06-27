@@ -1,0 +1,56 @@
+.containerMessage {
+  grid-area: containerMessage;
+  height: 100%;
+  width: 100%;
+}
+.containerMessage__title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.containerMessage__imputTextArea {
+  border: 1px solid var(---color-theme-type-7);
+  border-radius: 5px;
+  height: 90%;
+  width: 95%;
+  padding: 10px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.containerMessage__imputTextArea--textArea {
+  background: none;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  height: 90%;
+  font-size: 1.2rem;
+  color: var(---color-theme-type-7);
+}
+.containerMessage__imputTextArea--textArea::placeholder {
+  color: var(---color-theme-type-7);
+}
+
+.containerMessage__containerButton {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.containerMessage__button {
+  /* button style */
+  background-color: var(---color-theme-type-6);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.containerMessage__button:hover {
+  background-color: var(---color-theme-type-5);
+}
