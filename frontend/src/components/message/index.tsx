@@ -20,7 +20,9 @@ export default function Message() {
 
   return (
     <div className="containerMessage">
-      <div className="containerMessage__title">Mensaje personalizado</div>
+      <div className="containerMessage__title secondaryTitle ">
+        Mensaje personalizado
+      </div>
       <div className="containerMessage__imputTextArea">
         <textarea
           className="containerMessage__imputTextArea--textArea"

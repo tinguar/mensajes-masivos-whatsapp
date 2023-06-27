@@ -1,10 +1,16 @@
+/* font-family: 'Alfa Slab One', cursive;
+font-family: 'Concert One', cursive;
+font-family: 'Gudea', sans-serif; */
+
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Concert+One&family=Gudea:ital,wght@0,400;0,700;1,400&display=swap");
+
 * {
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Gudea", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -21,13 +27,36 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-
+  /* boton secundarios */
   ---color-theme-type-1: #04f9fd;
   ---color-theme-type-2: #10bafb;
+
+  /* botones primarios */
   ---color-theme-type-3: #2e7cf9;
   ---color-theme-type-4: #405af7;
+
+  /* hovers, bordes */
   ---color-theme-type-5: #4d41f5;
+
+  /* fondo partials */
   ---color-theme-type-6: #122a64;
-  ---color-theme-type-7: #dee4f3;
+
+  /* texto partials*/
+  ---color-theme-type-6-2: #10234e;
+
+  /* fondo */
+  ---color-theme-type-7: #ffffff;
   ---color-theme-type-8: #888698;
+}
+
+.principalTitle {
+  font-size: 3.2em;
+  font-weight: bold;
+  font-family: "Alfa Slab One", cursive;
+  line-height: 1.1;
+}
+.secondaryTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: "Concert One", cursive;
 }

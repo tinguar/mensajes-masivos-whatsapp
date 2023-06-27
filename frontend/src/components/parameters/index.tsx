@@ -13,7 +13,9 @@ export default function Parameters() {
 
   return (
     <div className="containerParams">
-      <div className="containerParams__title">Parametros del archivo.</div>
+      <div className="containerParams__title secondaryTitle ">
+        Parametros del archivo.
+      </div>
       <div className="containerParams__paramsList">
         <div className="paramsList__containerScroll">
           {params &&

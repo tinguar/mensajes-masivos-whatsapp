@@ -12,12 +12,12 @@
 .formFile {
   padding: 10px;
   width: 95%;
-  border-bottom: 2px solid var(---color-theme-type-7);
+  border-bottom: 2px solid var(---color-theme-type-3);
 }
 .formFile__label-input {
   font-size: 25px;
   margin-right: 10px;
-  color: var(---color-theme-type-7);
+  color: var(---color-theme-type-6-2);
   font-weight: bold;
 }
 .formFile__inputFileSelector {
@@ -26,17 +26,24 @@
   font-size: 25px;
   padding: 5px 15px;
   border-radius: 5px;
-  color: var(---color-theme-type-7);
+  color: var(---color-theme-type-2);
 }
 .formFile__inputFileSelector:hover {
   cursor: pointer;
-  background-color: var(---color-theme-type-7);
+  background-color: var(---color-theme-type-2);
   color: var(---color-theme-type-6);
 }
 
 .formFile__nameFile {
   font-size: 25px;
   font-style: italic;
-  color: var(---color-theme-type-7);
+  color: var(---color-theme-type-6-2);
+  margin: 0px 10px;
+}
+
+.formFile__uploadingLabel {
+  font-size: 25px;
+  font-style: italic;
+  color: var(---color-theme-type-6-2);
   margin: 0px 10px;
 }

@@ -4,12 +4,11 @@
   width: 100%;
 }
 .containerMessage__title {
-  font-size: 1.5rem;
   margin-bottom: 10px;
-  font-weight: bold;
+  color: var(---color-theme-type-6-2);
 }
 .containerMessage__imputTextArea {
-  border: 1px solid var(---color-theme-type-7);
+  border: 2px solid var(---color-theme-type-3);
   border-radius: 5px;
   height: 90%;
   width: 95%;
@@ -29,10 +28,11 @@
   width: 100%;
   height: 90%;
   font-size: 1.2rem;
-  color: var(---color-theme-type-7);
+  color: var(---color-theme-type-6-2);
 }
 .containerMessage__imputTextArea--textArea::placeholder {
-  color: var(---color-theme-type-7);
+  color: var(---color-theme-type-6);
+  font-style: italic;
 }
 
 .containerMessage__containerButton {
@@ -44,13 +44,16 @@
 }
 .containerMessage__button {
   /* button style */
-  background-color: var(---color-theme-type-6);
+  background-color: var(---color-theme-type-6-2);
   border: none;
   border-radius: 5px;
   padding: 10px;
   box-sizing: border-box;
   cursor: pointer;
+  color: var(---color-theme-type-2);
+  font-weight: bold;
 }
 .containerMessage__button:hover {
-  background-color: var(---color-theme-type-5);
+  background-color: var(---color-theme-type-2);
+  color: var(---color-theme-type-6-2);
 }

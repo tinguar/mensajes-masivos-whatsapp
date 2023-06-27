@@ -60,7 +60,9 @@ export default function InputFile() {
             {file.name}
           </label>
         )}
-        {isUploading && <span>Cargando archivo...</span>}
+        {isUploading && (
+          <span className="formFile__uploadingLabel">Cargando archivo...</span>
+        )}
       </div>
     </div>
   );
