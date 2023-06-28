@@ -57,3 +57,12 @@
   background-color: var(---color-theme-type-2);
   color: var(---color-theme-type-6-2);
 }
+
+@media (max-width: 880px) {
+  .containerMessage__imputTextArea--textArea {
+    height: 80%;
+  }
+  .containerMessage__containerButton {
+    height: 20%;
+  }
+}

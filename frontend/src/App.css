@@ -1,6 +1,8 @@
 .application {
   display: grid;
   min-height: 100%;
+
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header header header"
@@ -12,8 +14,8 @@
   grid-area: content;
   background-color: var(---color-theme-type-7);
   width: 100%;
-  box-sizing: border-box;
   padding: 10px;
+  box-sizing: border-box;
 
   display: grid;
   grid-template-columns: auto 1fr 1fr auto;
@@ -21,4 +23,43 @@
   grid-template-areas:
     "inputFile inputFile inputFile inputFile"
     "addLeft containerParams containerMessage addRight";
+}
+
+@media (max-width: 880px) {
+  .mainContent {
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    grid-template-rows: auto auto auto 50px;
+    grid-template-areas:
+      "inputFile inputFile"
+      "containerParams containerParams"
+      "containerMessage containerMessage"
+      "addLeft addRight";
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 50px 50px;
+    grid-template-areas:
+      "inputFile"
+      "containerParams"
+      "containerMessage"
+      "addRight"
+      "addLeft";
+  }
+}
+
+/* Estilos para celular */
+@media (max-width: 480px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "inputFile"
+      "addLeft"
+      "containerParams"
+      "containerMessage"
+      "addRight";
+  }
 }

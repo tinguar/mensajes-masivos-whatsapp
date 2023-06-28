@@ -4,11 +4,6 @@ font-family: 'Gudea', sans-serif; */
 
 @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Concert+One&family=Gudea:ital,wght@0,400;0,700;1,400&display=swap");
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   font-family: "Gudea", sans-serif;
   line-height: 1.5;

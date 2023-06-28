@@ -1,7 +1,7 @@
 .containerParams {
   grid-area: containerParams;
   height: 100%;
-  width: 90%;
+  width: 95%;
 }
 .containerParams__title {
   font-size: 1.5rem;
