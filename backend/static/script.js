@@ -14,7 +14,7 @@ $(document).ready(function() {
       processData: false,
       success: function(response) {
         console.log(response);
-        obtenerNombresColumnas(); // Llama a la función para obtener los nombres de las columnas
+        obtenerNombresColumnas(); // Retrieve column names after successful file upload
         $("#message-container").show();
       },
       error: function(error) {
@@ -42,31 +42,67 @@ $(document).ready(function() {
     });
   });
 
+  $("#select-column-numero").click(function(e) {
+    e.preventDefault();
+    var columnaSeleccionada = $("#columna-select").val();
+
+    $.ajax({
+      url: "http://localhost:5000/numero-columna",
+      type: "POST",
+      data: { columna: columnaSeleccionada }, // Enviar la columna seleccionada en la solicitud
+      success: function(response) {
+        console.log(response);
+        alert("Columna de número seleccionada correctamente");
+      },
+      error: function(error) {
+        console.log(error);
+        alert("Error al seleccionar la columna de número");
+      }
+    });
+  });
+
+  $("#select-column-mensaje").click(function(e) {
+    e.preventDefault();
+    var columnaSeleccionada = $("#columna-mensaje-select").val();
+
+    // Insertar el marcador de columna en la posición actual del cursor en el campo de texto del mensaje
+    var mensajeInput = $("#mensaje-input")[0];
+    var mensajeActual = mensajeInput.value;
+    var cursorPos = mensajeInput.selectionStart;
+    var nuevoMensaje = mensajeActual.slice(0, cursorPos) + " [" + columnaSeleccionada + "]" + mensajeActual.slice(cursorPos);
+    $("#mensaje-input").val(nuevoMensaje);
+
+    // Restaurar la posición del cursor después de insertar el nombre de la columna
+    var nuevaCursorPos = cursorPos + columnaSeleccionada.length + 3; // 3 es la longitud de los caracteres adicionales ([ y ])
+    mensajeInput.setSelectionRange(nuevaCursorPos, nuevaCursorPos);
+  });
+
   function obtenerNombresColumnas() {
     $.ajax({
       url: "http://localhost:5000/nombres-columnas",
       type: "GET",
       dataType: "json",
       success: function(response) {
-        var columnas = response.columnas_principales;
-        var columnasHTML = "";
+        if (response.columnas_principales && response.columnas_principales.length > 0) {
+          var columnas = response.columnas_principales;
+          var columnasHTML = "";
 
-        for (var i = 0; i < columnas.length; i++) {
-          columnasHTML += "<p onclick='seleccionarColumna(this)'>" + columnas[i] + "</p>"; // Agregar onclick para seleccionar la columna
+          for (var i = 0; i < columnas.length; i++) {
+            columnasHTML += "<option value='" +columnas[i]+ "'>" +columnas[i]+ "</option>";
+          }
+
+          $("#columna-select").html(columnasHTML);
+          $("#columna-mensaje-select").html(columnasHTML);
+        } else {
+          $("#columna-select").html("<option>No se encontraron columnas</option>");
+          $("#columna-mensaje-select").html("<option>No se encontraron columnas</option>");
         }
-
-        $("#columnas").html(columnasHTML);
       },
       error: function(error) {
         console.log(error);
+        $("#columna-select").html("<option>Error al obtener los nombres de las columnas</option>");
+        $("#columna-mensaje-select").html("<option>Error al obtener los nombres de las columnas</option>");
       }
     });
   }
 });
-
-function seleccionarColumna(elemento) {
-  var columnaSeleccionada = $(elemento).text();
-  var mensajeActual = $("#mensaje-input").val();
-  var nuevoMensaje = mensajeActual + " [" + columnaSeleccionada + "]";
-  $("#mensaje-input").val(nuevoMensaje);
-}
