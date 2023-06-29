@@ -7,6 +7,8 @@ import time
 from tkinter import *
 import tempfile
 import os
+import platform
+
 
 app = Flask(__name__)
 CORS(app)
@@ -15,6 +17,8 @@ CORS(app)
 TEMP_DIR = tempfile.gettempdir()
 cached_data = None  # Variable global para almacenar los datos en caché
 columnas_principales = []  # Variable global para almacenar los nombres de las columnas principales
+columna_numero = None  # Variable global para almacenar la columna que contiene los números de teléfono
+
 
 # Ruta para cargar el archivo
 @app.route('/cargar-archivo', methods=['POST'])
@@ -31,13 +35,17 @@ def cargar_archivo():
 
     return jsonify({'success': True, 'message': 'Archivo cargado correctamente'})
 
+
 # Ruta para enviar los mensajes
 @app.route('/enviar-mensajes', methods=['POST'])
 def enviar_mensajes():
     if cached_data is None:
         return jsonify({'error': 'No se ha cargado ningún archivo'})
 
-    numeros = cached_data['NUMERO']
+    if columna_numero is None:
+        return jsonify({'error': 'No se ha seleccionado la columna de número'})
+
+    numeros = cached_data[columna_numero]
     mensaje_personalizado = request.form['mensaje']
 
     # Iterar sobre los datos de cada columna
@@ -51,10 +59,11 @@ def enviar_mensajes():
                 valor_celda = row[col]
                 mensaje = mensaje.replace(marcador, str(valor_celda))
 
-        numero = str(row['NUMERO'])  # Obtener el número de teléfono de la columna 'NUMERO'
+        numero = str(row[columna_numero])  # Obtener el número de teléfono de la columna seleccionada
         sendmsj(numero, mensaje)  # Enviar mensaje de WhatsApp
 
     return jsonify({'success': True, 'message': 'Mensajes enviados correctamente'})
+
 
 # Ruta para obtener los nombres de las columnas principales
 @app.route('/nombres-columnas', methods=['GET'])
@@ -63,6 +72,14 @@ def nombres_columnas():
         return jsonify({'error': 'No se ha cargado ningún archivo'})
 
     return jsonify({'columnas_principales': columnas_principales})
+
+
+# Ruta para seleccionar la columna de número
+@app.route('/numero-columna', methods=['POST'])
+def numero_columna():
+    global columna_numero
+    columna_numero = request.form['columna']
+    return jsonify({'success': True, 'message': 'Columna de número seleccionada correctamente'})
 
 
 # Función para leer los datos del archivo y guardarlos en caché
@@ -75,10 +92,10 @@ def get_data(file):
     data = None
     if file.filename.endswith('.csv'):
         # Si es un archivo CSV
-        data = pd.read_csv(temp_file_path, encoding='utf-8')
+        data = pd.read_csv(temp_file_path, encoding='utf-8', dtype=str)
     elif file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
         # Si es un archivo Excel
-        data = pd.read_excel(temp_file_path)
+        data = pd.read_excel(temp_file_path, dtype=str)
 
     return data
 
@@ -87,16 +104,26 @@ def get_data(file):
 def sendmsj(Number, mensaje):
     win = Tk()
     screen_width = win.winfo_screenwidth()
-    screen_height= win.winfo_screenheight()
+    screen_height = win.winfo_screenheight()
     numero = "+" + Number  # Agregar el código de país al número
-    pw.sendwhatmsg_instantly(numero, mensaje)
+    pw.sendwhatmsg_instantly(numero, mensaje, wait_time=10)
     pa.moveTo(screen_width * 0.694, screen_height * 0.90)
     pa.click()
     pa.press('enter')
     time.sleep(2)
-    pa.hotkey('ctrl', 'w')
+    # Cerrar la ventana según el sistema operativo
+    system = platform.system()
+    if system == 'Windows':
+        pa.hotkey('ctrl', 'w')
+    elif system == 'Darwin':  # macOS
+        pa.hotkey('command', 'w')
+    elif system == 'Linux':
+        pa.hotkey('ctrl', 'w')
+    else:
+        # Sistema operativo no compatible, realizar alguna acción por defecto o mostrar un mensaje de error
+        print('Sistema operativo no compatible')
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(threaded=True)
 
