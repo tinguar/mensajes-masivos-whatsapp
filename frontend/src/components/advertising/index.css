@@ -1,0 +1,13 @@
+.advertising {
+  width: 150px;
+  height: 500px;
+  color: var(---color-theme-type-6-2);
+}
+
+.advertising-left {
+  grid-area: addLeft;
+}
+
+.advertising-right {
+  grid-area: addRight;
+}

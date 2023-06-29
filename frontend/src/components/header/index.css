@@ -1,0 +1,15 @@
+.header {
+  grid-area: header;
+
+  background-color: var(---color-theme-type-4);
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 2em;
+  box-sizing: border-box;
+}
+.header__title {
+  color: var(---color-theme-type-6-2);
+}
