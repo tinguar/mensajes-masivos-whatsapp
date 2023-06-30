@@ -8,6 +8,7 @@ export interface IGlobalState {
   params: IParam[] | [];
   message: string | "";
   currentMainParam: string | null | "";
+  currentPositionPointer: number | null | "";
 }
 
 const mainSlice = createSlice({
@@ -16,6 +17,7 @@ const mainSlice = createSlice({
     params: [],
     message: "",
     currentMainParam: null,
+    currentPositionPointer: null,
   } as IGlobalState,
   reducers: {
     setParams: (state, action) => {
@@ -32,6 +34,9 @@ const mainSlice = createSlice({
     setMainParam: (state, action) => {
       state.currentMainParam = action.payload;
     },
+    setCurrentPositionPointer: (state, action) => {
+      state.currentPositionPointer = action.payload;
+    },
   },
 });
 
@@ -41,4 +46,5 @@ export const {
   setParams,
   setMessage,
   setMainParam,
+  setCurrentPositionPointer,
 } = mainSlice.actions;

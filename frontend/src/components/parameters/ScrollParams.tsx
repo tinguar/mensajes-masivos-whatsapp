@@ -3,10 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ScrollParams() {
   const dispatch = useDispatch();
-  const { params, message } = useSelector((state: any) => state.globalState);
+  const { params, message, currentPositionPointer } = useSelector(
+    (state: any) => state.globalState
+  );
 
   const selectParam = (param: string) => {
-    dispatch(setMessage(message + `[${param}] `));
+    const arrayString = message.split("");
+    arrayString.splice(currentPositionPointer, 0, `[${param}]`);
+    const newMessage = arrayString.join("");
+    dispatch(setMessage(newMessage));
   };
 
   return (
