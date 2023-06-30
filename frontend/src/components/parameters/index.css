@@ -61,10 +61,13 @@
 
 .paramsList__containerScroll {
   width: auto;
-  height: 400px;
+  height: auto;
   min-height: auto;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 10px;
   overflow-y: scroll;
 }
@@ -94,5 +97,17 @@
 
   & .contentParam__parameter {
     color: var(---color-theme-type-6);
+  }
+}
+
+@media (max-width: 400px) {
+  .paramsList__containerScroll {
+    height: 400px;
+  }
+}
+
+@media (min-width: 400px) {
+  .paramsList__containerScroll {
+    height: 400px;
   }
 }

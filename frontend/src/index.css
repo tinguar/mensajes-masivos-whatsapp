@@ -53,8 +53,21 @@ body {
   font-family: "Concert One", cursive;
   line-height: 1.1;
 }
+
 .secondaryTitle {
   font-size: 1.2rem;
   font-weight: bold;
   font-family: "Concert One", cursive;
+}
+
+@media (min-width: 375px) {
+  .principalTitle {
+    font-size: 2.5em;
+  }
+}
+
+@media (min-width: 280px) {
+  .principalTitle {
+    font-size: 1.7em;
+  }
 }

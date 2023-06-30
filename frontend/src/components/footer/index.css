@@ -1,6 +1,6 @@
 .footer {
   grid-area: footer;
-  background-color: var(---color-theme-type-4);
+  background-color: var(---color-theme-type-6);
   width: 100%;
   height: 5vh;
   display: flex;
@@ -11,7 +11,7 @@
 }
 
 .footer__credits {
-  color: var(---color-theme-type-6-2);
+  color: var(---color-theme-type-3);
   font-size: 1.2em;
   line-height: 1.1;
   font-weight: bold;
