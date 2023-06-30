@@ -1,9 +1,11 @@
-import useSendMainParam from "../../../hooks/useSendMainParam";
 import { useSelector } from "react-redux";
+import CloseIcon from "../../assets/close.svg";
+import CurrentParam from "./CurrentParam";
 
 export default function HeaderParams() {
-  const { verifyMainParam } = useSendMainParam();
-  const { params } = useSelector((state: any) => state.globalState);
+  const { params, currentMainParam } = useSelector(
+    (state: any) => state.globalState
+  );
 
   return (
     <div className="containerParams__contentTitle">
@@ -11,8 +13,9 @@ export default function HeaderParams() {
         {params.length > 0
           ? "Parametros del archivo."
           : "Cargue un archivo para ver los parametro"}
+        {currentMainParam && <CurrentParam />}
       </div>
-      {!verifyMainParam() && params.length > 0 && (
+      {!currentMainParam && params.length > 0 && (
         <div className="containerParams__helperLabel">
           Escoje el parametro que coresponde a los numeros de celular
         </div>

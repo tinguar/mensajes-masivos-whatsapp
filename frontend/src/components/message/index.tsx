@@ -13,7 +13,6 @@ export default function Message() {
   };
 
   const actionMessage = (e: Event) => {
-    console.log("enviando mensaje");
     e.preventDefault();
     sendMessage(message);
   };

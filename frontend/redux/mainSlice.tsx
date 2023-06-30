@@ -4,9 +4,10 @@ export interface IParam {
   name: string;
   isMain: boolean;
 }
-export interface IGobalState {
+export interface IGlobalState {
   params: IParam[] | [];
   message: string | "";
+  currentMainParam: string | null | "";
 }
 
 const mainSlice = createSlice({
@@ -14,7 +15,8 @@ const mainSlice = createSlice({
   initialState: {
     params: [],
     message: "",
-  } as IGobalState,
+    currentMainParam: null,
+  } as IGlobalState,
   reducers: {
     setParams: (state, action) => {
       const arrayParams = action.payload as string[];
@@ -28,11 +30,7 @@ const mainSlice = createSlice({
       state.message = action.payload;
     },
     setMainParam: (state, action) => {
-      const currentParams = state.params as IParam[];
-      const indexParam = currentParams.findIndex(
-        (param) => param.name === action.payload
-      );
-      currentParams[indexParam].isMain = true;
+      state.currentMainParam = action.payload;
     },
   },
 });

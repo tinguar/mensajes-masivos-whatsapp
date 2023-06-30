@@ -13,17 +13,17 @@ const useSendMainParam = () => {
     setError(null);
 
     try {
+      const formData = new FormData();
+      formData.append("columna", currentMainParam);
+
       const response = await axios.post(
         "http://localhost:5000/numero-columna",
-        {
-          columna: currentMainParam,
-        }
+        formData
       );
 
       if (response.status !== 200) {
         throw new Error("Error uploading file.");
       }
-      console.log(response.data);
     } catch (error: any) {
       setError(error);
     } finally {

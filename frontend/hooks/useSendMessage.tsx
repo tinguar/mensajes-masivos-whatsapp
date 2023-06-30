@@ -25,7 +25,7 @@ const useSendMessage = () => {
 
       // File uploaded successfully
       //   console.log("Params here successfully.");
-      console.log("Send message response: ", response.data);
+      // console.log("Send message response: ", response.data);
       //   setParams(response.data.columnas_principales);
     } catch (error: any) {
       console.log("Send message error: ", error);
