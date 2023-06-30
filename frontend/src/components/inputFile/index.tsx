@@ -12,6 +12,7 @@ export default function InputFile() {
   const [file, setFile] = useState(null as File | null);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(null);
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
