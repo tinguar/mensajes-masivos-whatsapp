@@ -31,7 +31,6 @@ export default function InputFile() {
 
   useEffect(() => {
     if (params.length > 0) {
-      console.log(params);
       dispatch(setParams(params));
     }
   }, [params]);

@@ -44,6 +44,8 @@ body {
   /* fondo */
   ---color-theme-type-7: #ffffff;
   ---color-theme-type-8: #888698;
+
+  --color-darger: red;
 }
 
 .principalTitle {
@@ -53,7 +55,7 @@ body {
   line-height: 1.1;
 }
 .secondaryTitle {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   font-family: "Concert One", cursive;
 }

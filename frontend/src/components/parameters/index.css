@@ -9,6 +9,14 @@
   font-weight: bold;
   color: var(---color-theme-type-6-2);
 }
+
+.containerParams__helperLabel {
+  color: var(--color-darger);
+  font-size: 0.9rem;
+  line-height: 0.9rem;
+  margin-bottom: 10px;
+}
+
 .containerParams__paramsList {
   height: 90%;
   width: 100%;
