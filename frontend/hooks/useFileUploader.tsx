@@ -19,10 +19,6 @@ const useFileUploader = () => {
       if (response.status !== 200) {
         throw new Error("Error uploading file.");
       }
-
-      // File uploaded successfully
-      // console.log("File uploaded successfully.");
-      // console.log(response.data);
     } catch (error: any) {
       setError(error);
     } finally {

@@ -17,10 +17,6 @@ const useGetParams = () => {
       if (response.status !== 200) {
         throw new Error("Error uploading file.");
       }
-
-      // File uploaded successfully
-      //   console.log("Params here successfully.");
-      //   console.log(response.data);
       setParams(response.data.columnas_principales);
     } catch (error: any) {
       setError(error);

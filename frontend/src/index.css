@@ -24,27 +24,16 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* boton secundarios */
+
   ---color-theme-type-1: #04f9fd;
   ---color-theme-type-2: #10bafb;
-
-  /* botones primarios */
   ---color-theme-type-3: #2e7cf9;
   ---color-theme-type-4: #405af7;
-
-  /* hovers, bordes */
   ---color-theme-type-5: #4d41f5;
-
-  /* fondo partials */
   ---color-theme-type-6: #122a64;
-
-  /* texto partials*/
   ---color-theme-type-6-2: #10234e;
-
-  /* fondo */
   ---color-theme-type-7: #ffffff;
   ---color-theme-type-8: #888698;
-
   --color-darger: red;
 }
 

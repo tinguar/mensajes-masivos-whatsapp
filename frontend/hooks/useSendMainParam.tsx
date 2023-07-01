@@ -16,9 +16,7 @@ const useSendMainParam = () => {
     try {
       const formData = new FormData();
       formData.append("columna", currentMainParam);
-
       const response = await axios.post(Endpoints.POST_PHONE_PARAM, formData);
-
       if (response.status !== 200) {
         throw new Error("Error uploading file.");
       }
@@ -46,7 +44,6 @@ const useSendMainParam = () => {
   return {
     isLoading,
     error,
-    // mainParam,
     verifyMainParam,
     chooseMainParam,
   };

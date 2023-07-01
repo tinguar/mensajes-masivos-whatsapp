@@ -13,17 +13,10 @@ const useSendMessage = () => {
     try {
       const data = new FormData();
       data.append("mensaje", message);
-
       const response = await axios.post(Endpoints.SEND_MESSAGE, data);
-
       if (response.status !== 200) {
         throw new Error("Error uploading file.");
       }
-
-      // File uploaded successfully
-      //   console.log("Params here successfully.");
-      // console.log("Send message response: ", response.data);
-      //   setParams(response.data.columnas_principales);
     } catch (error: any) {
       console.log("Send message error: ", error);
       setError(error);
@@ -35,7 +28,6 @@ const useSendMessage = () => {
   return {
     isLoading,
     error,
-    // params,
     sendMessage,
   };
 };
