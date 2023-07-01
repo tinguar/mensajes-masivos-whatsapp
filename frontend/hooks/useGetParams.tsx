@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { Endpoints } from "../src/constants";
 
 const useGetParams = () => {
   const [params, setParams] = useState([]);
@@ -11,9 +12,7 @@ const useGetParams = () => {
     setError(null);
 
     try {
-      const response = await axios.get(
-        "http://localhost:5000/nombres-columnas"
-      );
+      const response = await axios.get(Endpoints.GET_PARAMS);
 
       if (response.status !== 200) {
         throw new Error("Error uploading file.");

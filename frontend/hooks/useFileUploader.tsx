@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { Endpoints } from "../src/constants";
 
 const useFileUploader = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -13,10 +14,7 @@ const useFileUploader = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await axios.post(
-        "http://localhost:5000/cargar-archivo",
-        formData
-      );
+      const response = await axios.post(Endpoints.LOAD_FILE, formData);
 
       if (response.status !== 200) {
         throw new Error("Error uploading file.");

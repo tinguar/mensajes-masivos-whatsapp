@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { Endpoints } from "../src/constants";
 
 const useSendMainParam = () => {
   const [currentMainParam, setCurrentMainParam] = useState("");
@@ -16,10 +17,7 @@ const useSendMainParam = () => {
       const formData = new FormData();
       formData.append("columna", currentMainParam);
 
-      const response = await axios.post(
-        "http://localhost:5000/numero-columna",
-        formData
-      );
+      const response = await axios.post(Endpoints.POST_PHONE_PARAM, formData);
 
       if (response.status !== 200) {
         throw new Error("Error uploading file.");
