@@ -9,7 +9,7 @@ export default function ScrollParams() {
 
   const selectParam = (param: string) => {
     const arrayString = message.split("");
-    arrayString.splice(currentPositionPointer, 0, `[${param}]`);
+    arrayString.splice(currentPositionPointer, 0, ` [${param}] `);
     const newMessage = arrayString.join("");
     dispatch(setMessage(newMessage));
   };
