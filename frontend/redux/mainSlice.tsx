@@ -1,33 +1,49 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface IParam {
+  name: string;
+  isMain: boolean;
+}
+export interface IGlobalState {
+  params: IParam[] | [];
+  message: string | "";
+  currentMainParam: string | null | "";
+  currentPositionPointer: number | null | "";
+}
+
 const mainSlice = createSlice({
   name: "gobalState",
   initialState: {
-    // currentFile: {
-    //   name: null || String,
-    //   size: null || Number,
-    //   type: null || String,
-    //   url: null || String,
-    // },
     params: [],
     message: "",
-  },
+    currentMainParam: null,
+    currentPositionPointer: null,
+  } as IGlobalState,
   reducers: {
-    // setCurrentFile: (state, action) => {
-    //   state.currentFile = action.payload;
-    // },
     setParams: (state, action) => {
-      state.params = action.payload;
+      const arrayParams = action.payload as string[];
+      const currentParams = [] as IParam[];
+      arrayParams.map((param: string) => {
+        return currentParams.push({ name: param, isMain: false });
+      });
+      state.params = currentParams;
     },
     setMessage: (state, action) => {
       state.message = action.payload;
+    },
+    setMainParam: (state, action) => {
+      state.currentMainParam = action.payload;
+    },
+    setCurrentPositionPointer: (state, action) => {
+      state.currentPositionPointer = action.payload;
     },
   },
 });
 
 export default mainSlice.reducer;
 export const {
-  // setCurrentFile,
   setParams,
   setMessage,
+  setMainParam,
+  setCurrentPositionPointer,
 } = mainSlice.actions;

@@ -51,15 +51,14 @@
   }
 }
 
-/* Estilos para celular */
 @media (max-width: 480px) {
   .mainContent {
     grid-template-columns: 1fr;
     grid-template-areas:
       "inputFile"
-      "addLeft"
       "containerParams"
       "containerMessage"
-      "addRight";
+      "addRight"
+      "addLeft";
   }
 }
