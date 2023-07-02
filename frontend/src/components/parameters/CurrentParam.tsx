@@ -19,7 +19,7 @@ export default function CurrentParam() {
         className="containerParams__containerCurrenteParam--closeIcon"
         src={CloseIcon}
         alt="close-icon"
-        onClick={handleCleanParam}
+        onClick={() => handleCleanParam()}
       />
     </div>
   );

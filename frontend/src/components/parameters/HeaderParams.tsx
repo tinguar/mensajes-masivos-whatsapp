@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import CloseIcon from "../../assets/close.svg";
 import CurrentParam from "./CurrentParam";
 
 export default function HeaderParams() {
