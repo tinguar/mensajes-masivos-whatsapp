@@ -9,7 +9,6 @@ import tempfile
 import os
 import platform
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -24,6 +23,12 @@ columna_numero = None  # Variable global para almacenar la columna que contiene 
 @app.route('/cargar-archivo', methods=['POST'])
 def cargar_archivo():
     file = request.files['file']
+
+    # Verificar si el archivo es un archivo CSV válido
+    if not file.filename.endswith('.csv'):
+        print('Error: El archivo no es un archivo CSV válido')
+        return jsonify({'error': 'Formato de archivo no válido'})
+
     data = get_data(file)
     if data is None:
         return jsonify({'error': 'Formato de archivo no válido'})
@@ -84,20 +89,21 @@ def numero_columna():
 
 # Función para leer los datos del archivo y guardarlos en caché
 def get_data(file):
+    # Verificar si el archivo es un archivo CSV válido
+    if not file.filename.endswith('.csv'):
+        print('Error: El archivo no es un archivo CSV válido')
+        return None
+
     # Guardar archivo en el directorio temporal
     temp_file_path = os.path.join(TEMP_DIR, file.filename)
     file.save(temp_file_path)
 
-    # Cargar archivo en memoria
-    data = None
-    if file.filename.endswith('.csv'):
-        # Si es un archivo CSV
-        data = pd.read_csv(temp_file_path, encoding='utf-8', dtype=str)
-    elif file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
-        # Si es un archivo Excel
-        data = pd.read_excel(temp_file_path, dtype=str)
+    # Cargar archivo CSV en memoria
+    data = pd.read_csv(temp_file_path, encoding='utf-8', dtype=str)
+    print(data)
 
     return data
+
 
 
 # Función para enviar mensajes de WhatsApp
@@ -110,7 +116,7 @@ def sendmsj(Number, mensaje):
     pa.moveTo(screen_width * 0.694, screen_height * 0.90)
     pa.click()
     pa.press('enter')
-    time.sleep(2)
+    time.sleep(1)
     # Cerrar la ventana según el sistema operativo
     system = platform.system()
     if system == 'Windows':
@@ -126,4 +132,3 @@ def sendmsj(Number, mensaje):
 
 if __name__ == '__main__':
     app.run(threaded=True)
-
