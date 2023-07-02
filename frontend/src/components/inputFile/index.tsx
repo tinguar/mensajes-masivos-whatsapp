@@ -52,7 +52,7 @@ export default function InputFile() {
           name=""
           id="inputFileSelector"
           hidden
-          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .xlsx, .xls"
+          accept=".csv"
           onChange={handleFile}
         />
         {file && (

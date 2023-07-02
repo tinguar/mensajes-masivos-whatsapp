@@ -15,7 +15,7 @@ export default function Message() {
     dispatch(setMessage(e.target.value));
   };
 
-  const handlePositionMouse = (e: any) => {
+  const handlePositionMouse = () => {
     const cursorPosition = refInputMessage.current.selectionStart;
     dispatch(setCurrentPositionPointer(cursorPosition));
   };
@@ -36,7 +36,7 @@ export default function Message() {
           placeholder="Escribe tu mensaje aqui..."
           onChange={handleChange}
           ref={refInputMessage}
-          onClick={(e) => handlePositionMouse(e)}
+          onClick={() => handlePositionMouse()}
           value={message}
         ></textarea>
         <div className="containerMessage__containerButton">
