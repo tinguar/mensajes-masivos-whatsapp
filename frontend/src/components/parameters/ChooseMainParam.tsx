@@ -1,30 +1,31 @@
-import { IParam } from "../../../redux/mainSlice";
-
 import useSendMainParam from "../../../hooks/useSendMainParam";
 import { useDispatch, useSelector } from "react-redux";
 import { setMainParam } from "../../../redux/mainSlice";
+import { useEffect, useState } from "react";
 
 export default function ChooseMainParam() {
   const dispatch = useDispatch();
   const { params } = useSelector((state: any) => state.globalState);
+  const [localChooseMainParam, SetChooseMainParam] = useState("");
+
   const { chooseMainParam } = useSendMainParam();
 
-  const handleMainParam = (param: string) => {
-    chooseMainParam(param);
-    dispatch(setMainParam(param));
-  };
+  useEffect(() => {
+    dispatch(setMainParam(localChooseMainParam));
+    chooseMainParam(localChooseMainParam);
+  }, [localChooseMainParam]);
 
   return (
     <div className="paramsList__containerScroll">
       {params &&
-        params.map((param: IParam, index: number) => {
+        params.map((param: string, index: number) => {
           return (
             <div
               className="paramsList__container--contentParam"
               key={index}
-              onClick={() => handleMainParam(param.name)}
+              onClick={() => SetChooseMainParam(param)}
             >
-              <span className="contentParam__parameter">{param.name}</span>
+              <span className="contentParam__parameter">{param}</span>
             </div>
           );
         })}

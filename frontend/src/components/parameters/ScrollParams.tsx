@@ -1,4 +1,4 @@
-import { IParam, setMessage } from "../../../redux/mainSlice";
+import { setMessage } from "../../../redux/mainSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ScrollParams() {
@@ -17,14 +17,14 @@ export default function ScrollParams() {
   return (
     <div className="paramsList__containerScroll">
       {params &&
-        params.map((param: IParam, index: number) => {
+        params.map((param: string, index: number) => {
           return (
             <div
               className="paramsList__container--contentParam"
               key={index}
-              onClick={() => selectParam(param.name)}
+              onClick={() => selectParam(param)}
             >
-              <span className="contentParam__parameter">{param.name}</span>
+              <span className="contentParam__parameter">{param}</span>
             </div>
           );
         })}

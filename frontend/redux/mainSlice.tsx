@@ -1,13 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-export interface IParam {
-  name: string;
-  isMain: boolean;
-}
 export interface IGlobalState {
-  params: IParam[] | [];
+  params: string[];
   message: string | "";
-  currentMainParam: string | null | "";
+  currentMainParam: "";
   currentPositionPointer: number | null | "";
 }
 
@@ -16,17 +11,12 @@ const mainSlice = createSlice({
   initialState: {
     params: [],
     message: "",
-    currentMainParam: null,
+    currentMainParam: "",
     currentPositionPointer: null,
   } as IGlobalState,
   reducers: {
     setParams: (state, action) => {
-      const arrayParams = action.payload as string[];
-      const currentParams = [] as IParam[];
-      arrayParams.map((param: string) => {
-        return currentParams.push({ name: param, isMain: false });
-      });
-      state.params = currentParams;
+      state.params = action.payload as string[];
     },
     setMessage: (state, action) => {
       state.message = action.payload;
