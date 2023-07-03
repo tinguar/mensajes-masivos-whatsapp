@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import pywhatkit as pw
 import pyautogui as pa

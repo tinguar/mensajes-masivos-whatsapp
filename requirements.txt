@@ -1,0 +1,6 @@
+Flask==2.3.2
+Flask_Cors==3.0.10
+Flask_Cors==4.0.0
+pandas==2.0.3
+PyAutoGUI==0.9.54
+pywhatkit==5.4
