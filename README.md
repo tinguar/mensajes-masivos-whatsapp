@@ -1,3 +1,5 @@
-# whatsapp-messeguer
+# MENSAJES MASIVOS WHATSAPP
 
-Web App -
+Aplicion realizada por los estudiantes del Instituto Tecnologico Superior Japon
+
+Amor al conocimiento.
